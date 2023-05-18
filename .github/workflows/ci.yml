@@ -1,9 +1,10 @@
 name: "ci"
 on:
-  pull_request:
-    branches:
-      - main
-      - release/*
+  workflow_dispatch:
+  push:
+      branches-ignore:
+          - "release-please-**"
+          - "main"
 
 permissions:
   contents: read # for checkout
@@ -14,36 +15,13 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - name: get pr information
-        uses: actions/github-script@v6
-        id: pr
-        with:
-          script: |
-            const request = {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            }
-            core.info(`Getting PR #${request.pull_number} from ${request.owner}/${request.repo}`)
-            try {
-              const result = await github.rest.pulls.get(request)
-              core.info(`Got PR: ${JSON.stringify(result.data)}`)
-              return result.data
-            } catch (err) {
-              core.setFailed(`Request failed with error ${err}`)
-            }
-
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ fromJSON(steps.pr.outputs.result).head.ref }}
-          repository: ${{ fromJSON(steps.pr.outputs.result).head.repo.full_name }}
-          fetch-depth: 0
+      - name: Commit Linter
+        uses: wagoid/commitlint-github-action@v5.4.1    
 
       - name: setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           registry-url: "https://registry.npmjs.org"
 
       - name: bootstrap

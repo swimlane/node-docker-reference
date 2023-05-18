@@ -8,20 +8,31 @@ on:
         type: boolean
         default: false
   push:
-    branches:
-      - main
-
+      branches:
+          - main
+    
 
 permissions:
   contents: write # for checkout and tag
+  actions: write # updating envs
   pull-requests: write # for comments
   packages: write # for publish
+  id-token: write
 
 jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
     steps:
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"      
+
+      - name: Commit Linter
+        uses: wagoid/commitlint-github-action@v5.4.1
+
       - uses: google-github-actions/release-please-action@v3
         name: release-please
         id: release
@@ -29,16 +40,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           package-name: "@swimlane/docker-reference"
-
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: "https://registry.npmjs.org"
-
+      
       - name: bootstrap
         run: npm run bootstrap
 
