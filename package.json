@@ -20,8 +20,8 @@
   "devDependencies": {
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
-    "@types/jest": "29.2.0",
-    "@types/node": "18.11.3",
+    "@types/jest": "29.5.1",
+    "@types/node": "18.16.12",
     "@typescript-eslint/parser": "5.40.1",
     "@typescript-eslint/eslint-plugin": "5.40.1",
     "depcheck": "1.4.3",
