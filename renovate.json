@@ -1,4 +1,26 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>swimlane/renovate-config:content-projects"]
+  "extends": [
+    "config:base",
+    "schedule:daily",
+    "group:allNonMajor",
+    "group:definitelyTyped"
+  ],
+  "reviewersFromCodeOwners": true,
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "labels": ["security"]
+  },
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchPackagePatterns": ["lint", "prettier"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    }
+  ]
 }
