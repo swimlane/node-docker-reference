@@ -18,8 +18,8 @@
     "build": "rimraf lib && tsc"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.3",
-    "@commitlint/config-conventional": "17.6.3",
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
     "@types/jest": "29.5.1",
     "@types/node": "18.16.12",
     "@typescript-eslint/parser": "5.59.6",
