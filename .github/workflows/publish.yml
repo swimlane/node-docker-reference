@@ -35,7 +35,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"      
 
       - name: Commit Linter
-        uses: wagoid/commitlint-github-action@v5.4.1
+        uses: wagoid/commitlint-github-action@v5.5.1
 
       - uses: google-github-actions/release-please-action@v3
         name: release-please
